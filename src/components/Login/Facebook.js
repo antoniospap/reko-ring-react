@@ -15,8 +15,6 @@ const Facebook = ({ login }) => {
       username: response.name,
       fbUserId: response.id,
     };
-    login();
-    navigate("/home");
     //check if there is already a user registered with same fb-ID else create user
     try {
       const res = await DataService.getUserByFBID(user.fbUserId);
@@ -26,6 +24,8 @@ const Facebook = ({ login }) => {
     } catch (err) {
       console.log(err);
     }
+    login();
+    navigate("/home");
   };
 
   const updateDB = async (user) => {

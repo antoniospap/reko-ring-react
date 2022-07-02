@@ -3,9 +3,8 @@ import DataService from "../../services/requests";
 
 function Profile() {
   const userID = window.localStorage.getItem('userID');
-  const [farm, setFarm] = useState();
+  const [farm, setFarm] = useState({});
   const [updateFarm, setUpdateFarm] = useState({userID:userID});
-
 
 
   useEffect(() => {
@@ -13,7 +12,7 @@ function Profile() {
       try {
         const res = await DataService.getFarmByID(userID);
         console.log(res.data);
-        if (res.data.length != 0) setFarm(res.data[0]);
+        if (res.data.length != 0) setFarm(res.data[0] ?? {});
       } catch (error) {
         console.log(error);
       }
@@ -32,28 +31,42 @@ function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(farm);
-    console.log(updateFarm);
 
-    if (!farm){
+    //if user has not created profile for his farm then create POST
+    if (Object.keys(farm).length == 0){
       try {
         const res = await DataService.createFarm(updateFarm);
+        //setFarm(res.data);
       } catch (error) {
         console.log(error);
       }
     }
+    //if user already has a profile, update it.
     else {
+      console.log('ELSEEE');
       try {
-        const res = await DataService.updateFarm(updateFarm,userID);
+        console.log(updateFarm);
+        const res = await DataService.updateFarm(updateFarm);
+        console.log(res);
       } catch (error) {
         console.log(error);
       }
     }
+    window.location.reload(false); //could do it with setFarm which is commented some rows up, but the reload gives some user feedback that something happens when saving
   }
 
-  if (farm) {
-    if (farm.farmImg == "") farm.farmImg = "../pics/no-image.jpg";
-  }
+  let display = {
+    display: 'none',
+};
+
+if (Object.keys(farm).length > 0  || (updateFarm.farmName != undefined || updateFarm.description != undefined)) {
+  display = {
+    display: 'block',
+  };
+}
+ 
+  //if (farm.farmImg == "") farm.farmImg = "../pics/no-image.jpg"
+
   return (
     <div>
         <form method="POST" onSubmit={handleSubmit}>
@@ -86,6 +99,13 @@ function Profile() {
                 <span className="smallText">(spara för att se bilden)</span>
             </div>
             
+            <div className="article" id={farm._id ?? ''} style={display}>
+              <img className="img-fluid" src={`./pics/${farm.farmImg ?? 'no-image.jpg'}`} alt="Card image"/>
+              <div className="cardOverlay text-white">
+                <h5 className="">{updateFarm.farmName ?? farm.farmName}</h5>
+                <p className="">{updateFarm.description ?? farm.description}</p>
+              </div>
+            </div>
         </div>
     </div>
     

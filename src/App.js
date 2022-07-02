@@ -12,6 +12,8 @@ import Facebook from "./components/Login/Facebook";
 
 /* PRODUCENT */
 import Profile from "./components/Producent/Profile";
+import CreateArticle from "./components/Producent/CreateArticle";
+
 
 const App = () => {
   const [user,setUser] = useState(null);
@@ -34,6 +36,8 @@ const App = () => {
             <Route exact path="/home" element={<ArticleList />} />
             <Route exact path="/:id" element={<OneArticleByFarm />} />
             <Route exact path="/profile" element={<Profile />} />
+            <Route exact path="/create" element={<CreateArticle />} />
+
             <Route exact path="/logout" element={<Logout logout={() => setUser(null)}/>} />
           </>
         )}

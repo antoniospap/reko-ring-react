@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const articleSchema = new mongoose.Schema({
-  farmID: {
+  userID: {
     type: String,
     required:true
   },

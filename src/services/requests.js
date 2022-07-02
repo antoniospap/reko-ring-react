@@ -16,8 +16,12 @@ class FarmDataService {
     createFarm(data){
         return http.post(`/farms`, data);
     }
-    updateFarm(data,userID){
-        return http.put(`/farms/${userID}`, data);
+    updateFarm(data){
+        return http.put(`/farms/${data.userID}`, data);
+    }
+
+    createArticle(data){
+        return http.post(`/articles`, data);
     }
 
 

@@ -41,14 +41,14 @@ router.get('/array/:id',async (req,res) => {
 
 //Creating one
 router.post('/', async (req,res) => {
+    console.log(req.body);
     const article = new Article({
-        farmID: req.body.farmID,
-        pName: req.body.farmName,
-        pQuantity: req.body.description,
-        pDesc: req.body.products,
-        pImg: req.body.pImg,
-        pPrice: req.body.pPrice
+        dealingDate: req.body.dealingDate,
+        userID: req.body.userID,
+        products: req.body.products,
+
     })
+    console.log(article);
 
     try {
         const newArticle = await article.save(); //save in database
