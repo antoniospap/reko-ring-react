@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * Connect to mongoDB Database
  */
 
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect(process.env.MONGODB_URI || process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", error => console.log(error));
 db.once("open", () => console.log("Connected to Database"));
