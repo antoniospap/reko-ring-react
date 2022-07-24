@@ -11,8 +11,7 @@ function Profile() {
     async function retrieveFarm (){
       try {
         const res = await DataService.getFarmByID(userID);
-        console.log(res.data);
-        if (res.data.length != 0) setFarm(res.data[0] ?? {});
+        if (res.data) setFarm(res.data ?? {});
       } catch (error) {
         console.log(error);
       }
@@ -43,11 +42,9 @@ function Profile() {
     }
     //if user already has a profile, update it.
     else {
-      console.log('ELSEEE');
       try {
         console.log(updateFarm);
         const res = await DataService.updateFarm(updateFarm);
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -68,45 +65,50 @@ if (Object.keys(farm).length > 0  || (updateFarm.farmName != undefined || update
   //if (farm.farmImg == "") farm.farmImg = "../pics/no-image.jpg"
 
   return (
-    <div>
+    <div className="d-flex flex-column">
+
+      <div className="profileForm">
         <form method="POST" onSubmit={handleSubmit}>
-              <div className="addArticle red">
-                  <div className="mb-3">
-                      <label htmlFor="farmName" className="form-label">Gårdsnamn</label>
-                      <input type="text" className="form-control" id="farmName" placeholder="Växjö Gård" name="farmName" onChange={handleChange} required />
-                  </div>
+          <div className="addArticle red">
+            <div className="mb-3">
+                <label htmlFor="farmName" className="form-label">Gårdsnamn</label>
+                <input type="text" className="form-control" id="farmName" placeholder="Växjö Gård" name="farmName" onChange={handleChange} required />
+            </div>
 
-                  <div className="mb-3">
-                      <label htmlFor="descriptionText" className="form-label">Valfri beskrivande text för gården <span className="smallText">(valfri)</span></label>
-                      <textarea className="form-control" id="description" rows="3" placeholder="Växjös Djurgård..." name="description" maxLength ="150" onChange={handleChange}></textarea>
-                  </div>
+            <div className="mb-3">
+                <label htmlFor="descriptionText" className="form-label">Valfri beskrivande text för gården <span className="smallText">(valfri)</span></label>
+                <textarea className="form-control" id="description" rows="3" placeholder="Växjös Djurgård..." name="description" maxLength ="150" onChange={handleChange}></textarea>
+            </div>
 
-                  <div id="profileImg">
-                      <label htmlFor="productPic" className="form-label">Lägg till bild <span className="smallText">(valfri)</span></label>
-                      <input type="file" id="productPic" name="farmImg" onChange={handleChange}/>
-                  </div>
+            <div id="profileImg">
+                <label htmlFor="productPic" className="form-label">Lägg till bild <span className="smallText">(valfri)</span></label>
+                <input type="file" id="productPic" name="farmImg" onChange={handleChange}/>
+            </div>
 
-                  <div id="submitProfile">
-                      <input type="submit" value="Spara" />
-                  </div>
-
-              </div>
-          </form>
-
+            <div id="submitProfile">
+                <input type="submit" value="Spara" />
+            </div>
+          </div>
+        </form>
+      </div>
+        
+      <div className="seeProfile">
+        
         <div className="d-flex flex-column align-items-center text-center">
             <div>
                 <h3>Så här kommer din profil att se ut för andra:</h3>
                 <span className="smallText">(spara för att se bilden)</span>
             </div>
             
-            <div className="article" id={farm._id ?? ''} style={display}>
-              <img className="img-fluid" src={`./pics/${farm.farmImg ?? 'no-image.jpg'}`} alt="Card image"/>
+            <div className="article" id={farm._id ?? ''}>
+              <img className="img-fluid" src={`./pics/${farm?.farmImg ?? 'no-image.jpg'}`} alt="Card image"/>
               <div className="cardOverlay text-white">
-                <h5 className="">{updateFarm.farmName ?? farm.farmName}</h5>
+                <h5 className="">{updateFarm.farmName ? updateFarm.farmName : farm.farmName}</h5>
                 <p className="">{updateFarm.description ?? farm.description}</p>
               </div>
             </div>
         </div>
+      </div>
     </div>
     
   );

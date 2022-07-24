@@ -9,6 +9,10 @@ const cartSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  dealingDate: {
+    type: String,
+    required: true,
+  },
   products: [
     {
       pID: {
@@ -40,9 +44,12 @@ const cartSchema = new mongoose.Schema({
   },
   createdAt: {
     type: String,
+  },
+  archive: {
+    type: Boolean,
+    default: false,
+    required: true
   }
-}
-
-);
+});
 
 module.exports = mongoose.model("Cart", cartSchema);

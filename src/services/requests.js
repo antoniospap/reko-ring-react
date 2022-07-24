@@ -9,7 +9,7 @@ class FarmDataService {
         return http.get(`/users/fbuserid/${fbUserID}`);
     }
 
-    /* PROFILE / FARM*/
+    /* PROFILE & FARM */
     getFarmByID(farmID){
         return http.get(`/farms/${farmID}`);
     }
@@ -20,21 +20,44 @@ class FarmDataService {
         return http.put(`/farms/${data.userID}`, data);
     }
 
-    createArticle(data){
-        return http.post(`/articles`, data);
-    }
+    
 
 
     /* ARTICLES */
+    createArticle(data){
+        return http.post(`/articles`, data);
+    }
     getArticles() {
         return http.get(`/articles`);
-    }
-    getFarms(){
-        return http.get(`/farms`);
     }
     getArticlesByID(id){
         return http.get(`/articles/${id}`);
     }
+    getAllArticlesOfUserID(id){
+        return http.get(`/articles/userID/${id}`);
+    }
+
+    /* CARTS */
+    completeCart(data){
+        return http.post(`/carts/`,data);
+    }
+    getAllUserCarts(userID){
+        return http.get(`/carts/`,userID);
+    }
+    getAllCartsOfArticle(id){
+        return http.get(`/carts/articleID/${id}`);
+    }
+    updateCartStatus(id,data){
+        return http.put(`/carts/${id}`, data);
+    }
+    cancelCart(id){
+        return http.delete(`/carts/${id}`);
+    }
+    archiveCart(id, data){
+        return http.put(`/carts/${id}`, data);
+    }
+
+
     
 }
 

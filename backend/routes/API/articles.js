@@ -5,7 +5,7 @@ const Article = require('../../models/article')
 //Getting all
 router.get('/', async (req,res) => {
     try {
-        const article = await Article.find();
+        const article = await Article.find().sort({"dealingDate": 1}).exec() ;
         res.json(article)
     } catch(err) {
         res.status(500).json({message: err.message}) // 500 = error on server/database
@@ -17,9 +17,9 @@ router.get('/:id',getArticle, (req,res) => {
 })
 
 //Getting one
-router.get('/farmID/:farmID',async (req,res) => {
+router.get('/userID/:id',async (req,res) => {
     try {
-        let article = await Article.find({farmID: req.params.farmID});        
+        let article = await Article.find({id: req.params.userID}).sort({"dealingDate": 1});        
         if (article == null) return res.status(404).json({message: 'Cannot find Article.'}) // 404 = could not find something, Article
         res.json(article);
     } catch (err) {
@@ -41,15 +41,12 @@ router.get('/array/:id',async (req,res) => {
 
 //Creating one
 router.post('/', async (req,res) => {
-    console.log(req.body);
     const article = new Article({
         dealingDate: req.body.dealingDate,
         userID: req.body.userID,
         products: req.body.products,
 
     })
-    console.log(article);
-
     try {
         const newArticle = await article.save(); //save in database
         res.status(201).json(newArticle); // automaticlly sends 200 which means successfull but 201 means you created something successfull

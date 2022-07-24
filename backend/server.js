@@ -42,7 +42,7 @@ app.use("/API/carts", cartsRouter);
 
 /**
  * Start HTTPS Server
- */
+
 
 const sslServer = https.createServer(
   {
@@ -50,10 +50,12 @@ const sslServer = https.createServer(
     cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
   },
   app
-);
+  sslServer.listen(port, () => console.log("Server Started"));
 
+);
+ */
 const port = process.env.PORT || 5000;
-sslServer.listen(port, () => console.log("Server Started"));
+app.listen(port, () => console.log("Server Started"));
 
 /**
  * Form POST to DB
@@ -63,7 +65,6 @@ const Cart = require("./models/cart");
 
 app.post("/create-article", async (req, res) => {
   try {
-    console.log(req.body);
     const savedFarm = await new Article(req.body);
     savedFarm.save();
     res.redirect("/");

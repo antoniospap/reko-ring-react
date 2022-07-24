@@ -44,8 +44,6 @@ router.put("/:userID", async (req, res) => {
     };
     try {
       let oldFarm = await Farm.findOneAndUpdate({ userID: req.body.userID }, updateData);
-      console.log(oldFarm);
-
       res.json(oldFarm); 
     } catch (err) {
       res.status(400).json({ message: err.message }); // 400 = users input misstake
@@ -59,7 +57,7 @@ router.get("/:userID", async (req, res) => {
   try {
     let farm = await Farm.find({ fbUserID: req.params.userID });
     if (farm == null) return res.status(404).json({ message: "Cannot find Farm." }); // 404 = could not find something, Farm
-    res.json(farm);
+    res.json(farm[0]);
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
