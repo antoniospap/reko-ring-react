@@ -21,7 +21,7 @@
     "react-dom": "^18.1.0",
     "react-facebook-login": "^4.1.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^2.1.3",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
@@ -29,7 +29,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "server": "nodemon backend/server.js"
-
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +50,5 @@
   },
   "overrides": {
     "autoprefixer": "10.4.5"
-}
-  
+  }
 }
