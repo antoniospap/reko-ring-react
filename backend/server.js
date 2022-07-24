@@ -57,46 +57,6 @@ const sslServer = https.createServer(
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log("Server Started"));
 
-/**
- * Form POST to DB
- */
-const Article = require("./models/article");
-const Cart = require("./models/cart");
-
-app.post("/create-article", async (req, res) => {
-  try {
-    const savedFarm = await new Article(req.body);
-    savedFarm.save();
-    res.redirect("/");
-  } catch (error) {
-    res.status(400).json({ message: error.message }); // 400 = users input misstake
-  }
-});
-
-app.get("/:id", (req, res) => {
-  res.sendFile(path.join(__dirname, "./views", "/farm.html"));
-});
-
-app.post("/completed-cart", async (req, res) => {
-  let saveCart;
-  //endast body.cart 0 sparas då alla produkter hamnar i första objectet, resten innehar endast articleID
-  try {
-    saveCart = new Cart(req.body.cart[0]);
-    saveCart.save();
-    res.redirect("/myOrders.html");
-  } catch (error) {
-    res.status(400).json({ message: error.message }); // 400 = users input misstake
-  }
-});
-
-app.post("/change-orderstatus", async (req, res) => {
-  try {
-    await Cart.findOneAndUpdate({_id:req.body.cartID},{orderStatus:req.body.orderStatus});
-    res.redirect("./farmOrders.html");
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-});
 
 const XLSX = require('xlsx');
 
