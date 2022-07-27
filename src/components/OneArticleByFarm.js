@@ -53,9 +53,9 @@ const OneArticleByFarm = props => {
   const retrieveArticle = async id => {
     try {
       let res = await DataService.getArticlesByID(id);
-      let resFarmInfo = await DataService.getFarmByID(res.data.userID);
+      let resFarmInfo = await DataService.getFarmByID(res.data[0].userID);
       setFarm(resFarmInfo.data ?? []);
-      setArticle(res?.data ?? []);
+      setArticle(res?.data[0] ?? []);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +124,7 @@ const OneArticleByFarm = props => {
           {article.products?.map((product, index) => {
             if (product.pImg == '') product.pImg = 'no-image.jpg';
             return (
-              <div className="card mb-3" style={{ maxWidth: '540px', margin: '0px 15px' }} key={product._id} id={product._id}>
+              <div className="card mb-3" style={{ maxWidth: '540px', margin: '0px 15px' }} key={index} id={product._id}>
                 <div className="row g-0">
                   <div className="col-md-4">
                     <img className="img-fluid rounded-start articleImg" src={'./pics/' + product.pImg} alt="article" />

@@ -50,6 +50,7 @@ nav {
   width: 40%;
   margin: 0 auto;
   padding:25px;
+  border: 1px solid black;
 }
 
 #homePage {
@@ -684,4 +685,16 @@ p {
 }
 .ordersHeader {
   width: 33.3%;
+}
+
+.sucess-message {
+  width: max-content;
+  margin: 30px auto;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+  color: white;
+  background-color: rgb(92, 144, 27);
+  padding: 15px;
 }

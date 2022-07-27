@@ -6,18 +6,18 @@ class FarmDataService {
         return http.post(`/users`,data);
     }
     getUserByFBID(fbUserID) {
-        return http.get(`/users/fbuserid/${fbUserID}`);
+        return http.get(`/users/fbuserid?id=${fbUserID}`);
     }
 
     /* PROFILE & FARM */
     getFarmByID(farmID){
-        return http.get(`/farms/${farmID}`);
+        return http.get(`/farm?id=${farmID}`);
     }
     createFarm(data){
         return http.post(`/farms`, data);
     }
     updateFarm(data){
-        return http.put(`/farms/${data.userID}`, data);
+        return http.put(`/farm?id=${data.userID}`, data);
     }
 
     
@@ -31,30 +31,30 @@ class FarmDataService {
         return http.get(`/articles`);
     }
     getArticlesByID(id){
-        return http.get(`/articles/${id}`);
+        return http.get(`/article?id=${id}`);
     }
     getAllArticlesOfUserID(id){
-        return http.get(`/articles/userID/${id}`);
+        return http.get(`/articles/userID?id=${id}`);
     }
 
     /* CARTS */
     completeCart(data){
-        return http.post(`/carts/`,data);
+        return http.post(`/createCart`, data);
     }
     getAllUserCarts(userID){
-        return http.get(`/carts/`,userID);
+        return http.get(`/carts?id=${userID}`);
     }
     getAllCartsOfArticle(id){
-        return http.get(`/carts/articleID/${id}`);
+        return http.get(`/carts/articleID?id=${id}`);
     }
     updateCartStatus(id,data){
-        return http.put(`/carts/${id}`, data);
+        return http.put(`/carts?id=${id}`, data);
     }
     cancelCart(id){
-        return http.delete(`/carts/${id}`);
+        return http.delete(`/carts?id=${id}`);
     }
     archiveCart(id, data){
-        return http.put(`/carts/${id}`, data);
+        return http.put(`/archiveCart?id=${id}`, data);
     }
 
 

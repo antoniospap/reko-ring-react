@@ -4,13 +4,13 @@ import DataService from "../../services/requests";
 function Profile() {
   const userID = window.localStorage.getItem('userID');
   const [farm, setFarm] = useState({});
-  const [updateFarm, setUpdateFarm] = useState({userID:userID});
+  const [updateFarm, setUpdateFarm] = useState({userID:'62b5f9a9fede1c3b2cdb0480'});
 
 
   useEffect(() => {
     async function retrieveFarm (){
       try {
-        const res = await DataService.getFarmByID(userID);
+        const res = await DataService.getFarmByID('62b5f9a9fede1c3b2cdb0480');
         if (res.data) setFarm(res.data ?? {});
       } catch (error) {
         console.log(error);
@@ -43,7 +43,6 @@ function Profile() {
     //if user already has a profile, update it.
     else {
       try {
-        console.log(updateFarm);
         const res = await DataService.updateFarm(updateFarm);
       } catch (error) {
         console.log(error);
@@ -101,7 +100,7 @@ if (Object.keys(farm).length > 0  || (updateFarm.farmName != undefined || update
             </div>
             
             <div className="article" id={farm._id ?? ''}>
-              <img className="img-fluid" src={`./pics/${farm?.farmImg ?? 'no-image.jpg'}`} alt="Card image"/>
+              <img className="img-fluid" src={`./pics/${farm?.farmImg}`} alt="Card image"/>
               <div className="cardOverlay text-white">
                 <h5 className="">{updateFarm.farmName ? updateFarm.farmName : farm.farmName}</h5>
                 <p className="">{updateFarm.description ?? farm.description}</p>

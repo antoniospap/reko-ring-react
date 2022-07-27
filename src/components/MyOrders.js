@@ -9,7 +9,8 @@ function MyOrders() {
   useEffect(() => {
     (async function () {
       try {
-        const res = await DataService.getAllUserCarts(userID);
+        const res = await DataService.getAllUserCarts('62b5f9a9fede1c3b2cdb0480');
+        console.log(res.data);
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].archive == true) {
             setArhivedCarts(prevState => [...prevState, res.data[i]]);
@@ -28,6 +29,7 @@ function MyOrders() {
     if (window.confirm('Är du säker på att du vill ta bort din order? Detta kan inte ångras!')) {
       try {
         const res = await DataService.cancelCart(cartID);
+        console.log(res);
         window.location.reload(false);
       } catch (error) {
         console.error(error);

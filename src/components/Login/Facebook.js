@@ -9,7 +9,6 @@ const Facebook = ({ login }) => {
   const navigate = useNavigate();
 
   const responseFacebook = async (response) => {
-    window.localStorage.setItem("isLoggedIn", true);
 
     let user = {
       username: response.name,
@@ -18,28 +17,30 @@ const Facebook = ({ login }) => {
     //check if there is already a user registered with same fb-ID else create user
     try {
       const res = await DataService.getUserByFBID(user.fbUserId);
-      if (res.data[0]) {
+      if (res.data[0] != undefined) {
         window.localStorage.setItem("userID", res.data[0]._id);
+        window.localStorage.setItem("isLoggedIn", true);
+        login();
+        navigate("/home");
       } else updateDB(user);
     } catch (err) {
       console.log(err);
     }
-    login();
-    navigate("/home");
   };
 
   const updateDB = async (user) => {
     try {
       const res = await DataService.createUser(user);
       window.localStorage.setItem("userID", res.data._id);
+      window.localStorage.setItem("isLoggedIn", true);
+      login();
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
   };
 
-  let fbContent;
-
-  fbContent = (
+  let fbContent = (
     <FacebookLogin
       appId="2835260340101626"
       autoLoad={false}

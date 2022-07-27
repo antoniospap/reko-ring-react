@@ -13,7 +13,7 @@ function MyOrders() {
   useEffect(() => {
     (async function () {
       try {
-        const res = await DataService.getAllArticlesOfUserID(userID);
+        const res = await DataService.getAllArticlesOfUserID('62b5f9a9fede1c3b2cdb0480');
         setArticles([...res.data]);
       } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@ function MyOrders() {
         <div className="d-flex flex-wrap farmOrders" id="activeOrders">
           {articles.map((article, index) => {
             return (
-              <div className="oneRowOrderAndCarts d-flex" key={article._id}>
+              <div className="oneRowOrderAndCarts d-flex" key={index}>
                 <Link to={'/orders/' + article._id}>
                   <div key={index} className="oneFarmOrder cartProduct" style={{ marginBottom: '0px' }}>
                     <div className="text-center">
@@ -60,7 +60,7 @@ function MyOrders() {
                       if (product.pImg == '') product.pImg = 'no-image.jpg';
 
                       return (
-                        <div className="container-fluid d-flex align-items-center justify-content-around cartProduct" key={product._id}>
+                        <div className="container-fluid d-flex align-items-center justify-content-around cartProduct" key={index}>
                           {/*<div className="col-md-4">
                           <img src={'./pics/' + product.pImg} className="img-fluid cartImg" alt="Product img" />
                     </div>*/}

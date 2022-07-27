@@ -18,10 +18,13 @@ function OneArticle() {
     })();
   }, []);
 
+
   const changeOrderStatus = async (status, cartID, index) => {
     try {
       const res = await DataService.updateCartStatus(cartID, { orderStatus: status });
-      setCarts(carts => carts.map((cart, i) => (i == index ? res.data : carts[i])));
+      //setCarts(carts => carts.map((cart, i) => (i == index ? res.data : carts[i]))); funkar ej då realm inte ger tillbaka updated object
+      window.location.reload(false);
+
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +72,7 @@ function OneArticle() {
           let totalPrice = 0;
           if (0 === 0) {
             return (
-              <div className="cart farmOrdersCart d-flex flex-column mb-5" style={cssStyle} key={cart._id}>
+              <div className="cart farmOrdersCart d-flex flex-column mb-5" style={cssStyle} key={index}>
                 <div className="d-flex flex-row justify-content-center">
                   <div>
                     <button onClick={() => changeOrderStatus('accepted', cart._id, index)}>Accept</button>
@@ -99,7 +102,7 @@ function OneArticle() {
                   let priceXquantity = parseInt(product.pPrice) * parseInt(product.pQuantity);
                   totalPrice += priceXquantity;
                   return (
-                    <div className="item container-fluid d-flex align-items-center" key={product._id + index}>
+                    <div className="item container-fluid d-flex align-items-center" key={index}>
                       <div className="col-md-4">
                         <p>{product.pName}</p>
                       </div>

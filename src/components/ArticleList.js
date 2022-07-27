@@ -15,17 +15,21 @@ const ArticleList = () => {
     retrieveArticles();
   }, []);
 
+  useEffect(() => {
+    if (articles.length == 0) return;
+
+    //get whos farm the article is
+    (async function () {
+      for (let i = 0; i < articles.length; i++) {
+        const res = await DataService.getFarmByID(articles[i].userID);
+        setFarms(prevState => [...prevState, res.data]);
+      }
+    })();
+  }, [articles]);
+
   const retrieveArticles = async () => {
     const res = await DataService.getArticles();
-    const favProperties = res.data;
     setArticles(res.data ?? []);
-    let farmInfo = [];
-    const fetchedUrls = await Promise.all(favProperties?.map(async el => farmInfo.push(await secondFunction(el.farmID)) /** use el to pass some ID */));
-    setFarms(farmInfo ?? []);
-  };
-  const secondFunction = async farmID => {
-    const res = await DataService.getFarmByID(farmID);
-    if (res.data) return res.data;
   };
 
   return (
@@ -58,12 +62,12 @@ const ArticleList = () => {
           </div>
         </div>
       </div>
-      <div id="producers" className='d-flex flex-column align-items-center mt-3'>
+      <div id="producers" className="d-flex flex-column align-items-center mt-3">
         <div>
           <h2>Producenter</h2>
         </div>
 
-        <div className='d-flex flex-wrap' id='articles'>
+        <div className="d-flex flex-wrap" id="articles">
           {articles.map((article, i) => {
             return (
               <div className="article" id={article._id} key={article._id}>
