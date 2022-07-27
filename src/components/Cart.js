@@ -15,8 +15,6 @@ function Cart(props) {
 
 
   const cofirmCart = async () => {
-    props.item.userID = '62b5f9a9fede1c3b2cdb0480';
-    console.log(props.item);
     try {
       let res = await DataService.completeCart(props.item);
       console.log(res);

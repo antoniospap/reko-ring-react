@@ -13,7 +13,7 @@ function MyOrders() {
   useEffect(() => {
     (async function () {
       try {
-        const res = await DataService.getAllArticlesOfUserID('62b5f9a9fede1c3b2cdb0480');
+        const res = await DataService.getAllArticlesOfUserID(userID);
         setArticles([...res.data]);
       } catch (error) {
         console.error(error);

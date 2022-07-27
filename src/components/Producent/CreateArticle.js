@@ -4,7 +4,7 @@ import DataService from '../../services/requests';
 function CreateArticle() {
   const userID = window.localStorage.getItem('userID');
   const [moreProducts, setMoreProducts] = useState([1]);
-  const [data, setData] = useState({ dealingDate: '', userID: '62b5f9a9fede1c3b2cdb0480', products: [] });
+  const [data, setData] = useState({ dealingDate: '', userID: userID, products: [] });
   const [success, setSuccess] = useState('');
 
   const [product, setProduct] = useState([

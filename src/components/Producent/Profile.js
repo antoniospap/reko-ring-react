@@ -4,13 +4,13 @@ import DataService from "../../services/requests";
 function Profile() {
   const userID = window.localStorage.getItem('userID');
   const [farm, setFarm] = useState({});
-  const [updateFarm, setUpdateFarm] = useState({userID:'62b5f9a9fede1c3b2cdb0480'});
+  const [updateFarm, setUpdateFarm] = useState({userID: userID});
 
 
   useEffect(() => {
     async function retrieveFarm (){
       try {
-        const res = await DataService.getFarmByID('62b5f9a9fede1c3b2cdb0480');
+        const res = await DataService.getFarmByID(userID);
         if (res.data) setFarm(res.data ?? {});
       } catch (error) {
         console.log(error);
