@@ -688,13 +688,17 @@ p {
 }
 
 .sucess-message {
-  width: max-content;
-  margin: 30px auto;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-style: italic;
+  font-size: 20px;
   font-weight: 500;
   color: white;
   background-color: rgb(92, 144, 27);
-  padding: 15px;
+  padding: 10px;
+}
+
+#producers {
+  width: 100%;
 }

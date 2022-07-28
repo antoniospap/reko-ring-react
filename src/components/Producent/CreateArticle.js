@@ -66,6 +66,8 @@ function CreateArticle() {
 
   return (
     <form method="POST" onSubmit={handleSubmit}>
+      {success && <div className="sucess-message">{success}</div>}
+
       <h3 className="text-center mt-3 mb-3">Lägg till Artikel inför Reko-ring:</h3>
       <div className="addArticle">
         <div>
@@ -181,7 +183,6 @@ function CreateArticle() {
         <input type="submit" id="submitArticle" className="mt-3 align-self-end" />
       </div>
 
-      {success && <div className="sucess-message">{success}</div>}
     </form>
   );
 }

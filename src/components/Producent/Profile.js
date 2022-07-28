@@ -5,6 +5,7 @@ function Profile() {
   const userID = window.localStorage.getItem('userID');
   const [farm, setFarm] = useState({});
   const [updateFarm, setUpdateFarm] = useState({userID: userID});
+  const [success, setSuccess] = useState('');
 
 
   useEffect(() => {
@@ -35,7 +36,7 @@ function Profile() {
     if (Object.keys(farm).length == 0){
       try {
         const res = await DataService.createFarm(updateFarm);
-        //setFarm(res.data);
+        setFarm(res.data);
       } catch (error) {
         console.log(error);
       }
@@ -44,11 +45,14 @@ function Profile() {
     else {
       try {
         const res = await DataService.updateFarm(updateFarm);
+        if (res.status === 200){
+          setFarm(res.data)
+          setSuccess("Uppdaterat");
+        }
       } catch (error) {
         console.log(error);
       }
     }
-    window.location.reload(false); //could do it with setFarm which is commented some rows up, but the reload gives some user feedback that something happens when saving
   }
 
   let display = {
@@ -65,7 +69,7 @@ if (Object.keys(farm).length > 0  || (updateFarm.farmName != undefined || update
 
   return (
     <div className="d-flex flex-column">
-
+      {success && <div className="sucess-message">{success}</div>}
       <div className="profileForm">
         <form method="POST" onSubmit={handleSubmit}>
           <div className="addArticle red">

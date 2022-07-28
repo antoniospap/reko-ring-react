@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import DataService from '../services/requests';
+import { useNavigate } from 'react-router-dom';
+
 
 function MyOrders() {
   const userID = window.localStorage.getItem('userID');
   const [carts, setCarts] = useState([]);
   const [archivedCarts, setArhivedCarts] = useState([]);
+  const [updateArchive, setUpdateArchive] = useState([]);
+
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     (async function () {
       try {
         const res = await DataService.getAllUserCarts(userID);
-        console.log(res.data);
         for (let i = 0; i < res.data.length; i++) {
           if (res.data[i].archive == true) {
             setArhivedCarts(prevState => [...prevState, res.data[i]]);
@@ -23,14 +27,17 @@ function MyOrders() {
         console.error(error);
       }
     })();
-  }, []);
+  }, [updateArchive]);
+
 
   const handleCancel = async cartID => {
+    let cartss = [...carts];
     if (window.confirm('Är du säker på att du vill ta bort din order? Detta kan inte ångras!')) {
       try {
         const res = await DataService.cancelCart(cartID);
-        console.log(res);
-        window.location.reload(false);
+        var index = carts.map(function(e) { return e._id; }).indexOf(cartID);
+        cartss.splice(index, 1)
+        setCarts(cartss)
       } catch (error) {
         console.error(error);
       }
@@ -38,9 +45,16 @@ function MyOrders() {
   };
 
   const handleArchive = async cartID => {
+    let cartss = [...carts];
+
     try {
       const res = await DataService.archiveCart(cartID, { archive: true });
-      window.location.reload(false);
+      var index = carts.map(function(e) { return e._id; }).indexOf(cartID);
+      cartss[index].archive = true;
+      setArhivedCarts([...archivedCarts, carts[index]]);
+      cartss.splice(index, 1)
+      setCarts(cartss);
+
     } catch (error) {
       console.error(error);
     }
@@ -48,6 +62,8 @@ function MyOrders() {
 
   return (
     <div className="d-flex flex-column align-items-center">
+            {success && <div className="sucess-message">{success}</div>}
+
       <div className="d-flex flex-column align-items-center orders">
         <h3>Aktiva orders:</h3>
         <div className="d-flex flex-row justify-content-start myOrders">

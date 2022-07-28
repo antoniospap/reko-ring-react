@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import DataService from '../../services/requests';
 
 function OneArticle() {
   const { id } = useParams(); //url parameter after / URL
   const userID = window.localStorage.getItem('userID');
   const [carts, setCarts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async function () {
@@ -20,10 +21,14 @@ function OneArticle() {
 
 
   const changeOrderStatus = async (status, cartID, index) => {
+    let cartss = [...carts];
+
     try {
       const res = await DataService.updateCartStatus(cartID, { orderStatus: status });
       //setCarts(carts => carts.map((cart, i) => (i == index ? res.data : carts[i]))); funkar ej då realm inte ger tillbaka updated object
-      window.location.reload(false);
+      var index = carts.map(function(e) { return e._id; }).indexOf(cartID);
+      cartss[index].orderStatus = status;
+      setCarts(cartss)
 
     } catch (error) {
       console.error(error);
